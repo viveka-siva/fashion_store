@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <menuitem id="fashion_menu_root"
+              name="Fashion Store"
+              sequence="2"/>
+   <menuitem id="hotel_menu_garment"
+              name="Garment"
+              sequence="2"
+              parent="fashion_store.fashion_menu_root"/>
+
+        <record id="view_fashion_form" model="ir.ui.view">
+            <field name="name">view.fashion.form</field>
+            <field name="model">fashion.garment</field>
+            <field name="arch" type="xml">
+               <form string="Garment">
+                   <sheet>
+                       <group>
+                         <group>
+                           <field name="entry"/>
+                           <field name="quantity"/>
+                           <field name="price"/>
+                         </group>
+                           <group>
+                               <field name="garment_type"/>
+                               <field name="brand"/>
+                           </group>
+                       </group>
+                   </sheet>
+               </form>
+            </field>
+        </record>
+        <record id="view_fashion_store_list" model="ir.ui.view">
+        <field name="name">view.fashion.list</field>
+        <field name="model">fashion.garment</field>
+        <field name="arch" type="xml">
+            <tree string="Garment Records">
+                  <group>
+                         <group>
+                           <field name="entry"/>
+                           <field name="quantity"/>
+                           <field name="price"/>
+                         </group>
+                           <group>
+                               <field name="garment_type"/>
+                               <field name="brand"/>
+                           </group>
+                  </group>
+            </tree>
+        </field>
+    </record>
+        <record id="action_fashion" model="ir.actions.act_window">
+            <field name="name">fashionstore</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">fashion.garment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_view_fashion_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="fashion_store.view_fashion_store_list"/>
+            <field name="act_window_id" ref="action_fashion"/>
+        </record>
+        <record id="view_fashion_action_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="fashion_store.view_fashion_form"/>
+        <field name="act_window_id" ref="action_fashion"/>
+    </record>
+    </data>
+</odoo>
+

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="fashion_store_root"
+              name="Fashion Store"
+              sequence="2"/>
+         <menuitem id="fashion_store_orderline"
+              name="OrderLine"
+              sequence="2"
+              parent="fashion_store.fashion_store_root"/>
+
+        <record id="view_orderline_menu_form" model="ir.ui.view">
+            <field name="name">view.orderline.form</field>
+            <field name="model">order.line</field>
+            <field name="arch" type="xml">
+                <form string="Order line">
+                    <sheet>
+                        <group>
+                          <group>
+                              <field name="name"/>
+                              <field name="order_date"/>
+                              <field name="price"/>
+                              <field name="orderdate_id"/>
+                          </group>
+                           <group>
+                               <field name="quantity"/>
+                               <field name="total"/>
+                               <field name="garment_type" attrs="{'required': [('garment_id', '=', True)]}"/>
+<!--                               <field name attrs="{'invisible': [('garment_type','=','t-shirt')]}"/>-->
+                           </group>
+                             <group name="Garment" string="Garment">
+                                <field name="garment_id" string="Garment"
+                                       attrs="{'invisible': [('garment_type','=',False)],'required': [('garment_type','!=',False)]}"/>
+
+                            </group>
+                       </group>
+                   </sheet>
+               </form>
+            </field>
+        </record>
+        <record id="view_orderline_store_list" model="ir.ui.view">
+            <field name="name">view.orderline.list</field>
+            <field name="model">order.line</field>
+            <field name="arch" type="xml">
+                <tree string="Orderline">
+                    <field name="name"/>
+                    <field name="price"/>
+                    <field name="quantity"/>
+                    <field name="total"/>
+<!--                    <field name="orderdate_id"/>-->
+                    <field name="garment_type"/>
+<!--                    <field name="garment_id" string="Garment"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_order_line" model="ir.actions.act_window">
+            <field name="name">Order Line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">order.line</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_view_order_store_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="fashion_store.view_orderline_store_list"/>
+            <field name="act_window_id" ref="action_order_line"/>
+        </record>
+
+        <record id="view_order_line_garment_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="fashion_store.view_orderline_menu_form"/>
+            <field name="act_window_id" ref="action_order_line"/>
+       </record>
+       <menuitem id="fashion_store_orderline_action"
+              name="Order Line"
+              sequence="2"
+              parent="fashion_store.fashion_store_orderline"
+              action="fashion_store.action_order_line"/>
+    </data>
+</odoo>
